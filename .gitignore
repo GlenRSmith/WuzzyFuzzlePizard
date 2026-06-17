@@ -1,0 +1,17 @@
+# Sandboxed tools — never commit the editor or templates
+/tools/
+
+# Godot import cache and per-user state
+game/.godot/
+game/.import/
+
+# Exported builds
+/builds/
+game/export_presets.cfg
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
