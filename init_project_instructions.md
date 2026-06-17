@@ -82,6 +82,20 @@ Now everything — editor settings, downloaded export templates, recent project 
    - Version Control Metadata: **Git**
 3. Click **Create & Edit**. Godot generates `project.godot`, `icon.svg`, and `.godot/` (import cache).
 4. Quit the editor once, so all files are flushed to disk.
+5. Create the project subfolders from section 2. Godot's save dialogs do **not** auto-create missing folders, so make them now. From `d:\Projects\WuzzyFuzzlePizard\`:
+
+   ```powershell
+   $sub = "game\addons","game\assets\art","game\assets\audio","game\assets\fonts","game\scenes","game\scripts","game\shaders"
+   $sub | ForEach-Object { New-Item -ItemType Directory -Force -Path $_ | Out-Null }
+   ```
+
+   (Equivalently, you can create them inside the editor: in the **FileSystem** dock, right-click `res://` → **New Folder…** for each one.)
+
+   Git won't track empty directories. If you want them in version control before you put any files in them, drop an empty `.gitkeep` into each:
+
+   ```powershell
+   $sub | ForEach-Object { New-Item -ItemType File -Force -Path "$_\.gitkeep" | Out-Null }
+   ```
 
 ## 5. Download export templates (sandboxed)
 
@@ -169,7 +183,7 @@ The Godot **Asset Library** tab inside the editor downloads these directly into 
 
 1. Reopen the editor, load the project.
 2. Scene → New Scene → 2D Scene. Add a `Label` node, set text to `Wuzzy Fuzzle Pizard`.
-3. Save as `scenes/main.tscn`.
+3. Save as `res://scenes/main.tscn` (the `scenes/` folder was created in section 4 step 5; if it's missing, create it now via the save dialog's **Create Folder** button or right-click `res://` → **New Folder…** in the FileSystem dock).
 4. Project → Project Settings → Application → Run → Main Scene → pick `scenes/main.tscn`.
 5. Press **F5**. A window should appear with the label. Sandbox confirmed.
 
