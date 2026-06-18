@@ -1,15 +1,8 @@
 [gd_scene format=3 uid="uid://c71lcq4pk8gub"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_sgp6g"]
+[ext_resource type="Script" uid="uid://cf3ib28qxcv12" path="res://scenes/main.gd" id="1_0wfyh"]
+[ext_resource type="Resource" path="res://puzzles/wizard.tres" id="2_puz"]
 
-[node name="Node2D" type="Node2D" unique_id=158032593]
-
-[node name="Label" type="Label" parent="." unique_id=1260766910]
-offset_left = 470.0
-offset_top = 227.0
-offset_right = 1007.0
-offset_bottom = 342.0
-text = "Wuzzy Fuzzle Pizard"
-label_settings = SubResource("LabelSettings_sgp6g")
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Main" type="Node2D" unique_id=2116452083]
+script = ExtResource("1_0wfyh")
+puzzle = ExtResource("2_puz")

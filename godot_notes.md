@@ -1,4 +1,9 @@
-# Debug mode
+# Launching Godot IDE
+
+Execute Godot_v4.6.3-stable_win64.exe from
+WuzzyFuzzlePizard/tools/godot
+
+# Game Debug mode
 
 ## The F5 run-window toolbar
 
@@ -67,8 +72,8 @@ Files created under `game/`:
 
 After opening the project in Godot:
 
-1. **Project → Project Settings → Autoload**.
-2. Path: `res://scripts/game_state.gd`, Node Name: `GameState`, **Enable** checked, **Add**.
+1. **Project → Project Settings → Globals tab → Autoload**.
+2. Path: `res://scripts/game_state.gd`, Node Name: `GameState`, **Enable** checked, click **Add** (don't forget this — typing the path alone doesn't register it).
 
 That's what makes `GameState.mode`, `GameState.fuzz_level`, etc. globally available from any script.
 

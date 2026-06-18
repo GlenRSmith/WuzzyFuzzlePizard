@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Puzzle" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/puzzle.gd" id="1_pscript"]
+
+[resource]
+script = ExtResource("1_pscript")
+display_name = "Wizard (placeholder)"
+grid_columns = 3
+grid_rows = 2
+base_score_per_piece = 10
