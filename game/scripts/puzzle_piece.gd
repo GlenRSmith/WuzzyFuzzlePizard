@@ -4,6 +4,7 @@ extends Node2D
 @export var target_position: Vector2 = Vector2.ZERO
 @export var grid_index: Vector2i = Vector2i.ZERO
 @export var snap_radius: float = 24.0
+@export var piece_size: Vector2 = Vector2(96, 96)
 
 @onready var _rect: ColorRect = $ColorRect
 
@@ -15,6 +16,7 @@ var _ghost: ColorRect
 
 func _ready() -> void:
 	_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_rect.size = piece_size
 	_spawn_ghost.call_deferred()
 	GameState.fuzz_level_changed.connect(_on_fuzz_changed)
 	_on_fuzz_changed(GameState.fuzz_level)
@@ -23,7 +25,7 @@ func _ready() -> void:
 func _spawn_ghost() -> void:
 	_ghost = ColorRect.new()
 	_ghost.name = "%s_ghost" % name
-	_ghost.size = _rect.size
+	_ghost.size = piece_size
 	var c := _rect.color
 	_ghost.color = Color(c.r, c.g, c.b, 0.25)
 	_ghost.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -37,13 +39,13 @@ func _on_fuzz_changed(level: float) -> void:
 		_rect.material.set_shader_parameter("fuzz_amount", level)
 
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if _snapped or GameState.mode != GameState.Mode.FUZZY:
 		return
 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		var mouse := get_global_mouse_position()
-		var hit_rect := Rect2(global_position, _rect.size)
+		var hit_rect := Rect2(global_position, piece_size)
 		if event.pressed and hit_rect.has_point(mouse):
 			_dragging = true
 			_drag_offset = global_position - mouse

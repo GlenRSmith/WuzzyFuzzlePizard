@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://c71lcq4pk8gub"]
+
+[ext_resource type="PackedScene" path="res://scenes/puzzle_piece.tscn" id="1_o5qli"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_sgp6g"]
+
+[node name="Node2D" type="Node2D" unique_id=158032593]
+
+[node name="Label" type="Label" parent="." unique_id=1260766910]
+offset_left = 470.0
+offset_top = 227.0
+offset_right = 1007.0
+offset_bottom = 342.0
+text = "Wuzzy Fuzzle Pizard"
+label_settings = SubResource("LabelSettings_sgp6g")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PuzzlePiece" parent="." unique_id=1903227704 instance=ExtResource("1_o5qli")]
+position = Vector2(572, 610)
+
+[node name="PuzzlePiece2" parent="." unique_id=2070373593 instance=ExtResource("1_o5qli")]
+position = Vector2(866, 425)
+
+[node name="PuzzlePiece3" parent="." unique_id=947631869 instance=ExtResource("1_o5qli")]
+position = Vector2(567, 422)
+
+[node name="PuzzlePiece4" parent="." unique_id=430169885 instance=ExtResource("1_o5qli")]
+position = Vector2(871, 621)

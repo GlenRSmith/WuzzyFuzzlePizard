@@ -4,9 +4,12 @@ const PuzzlePieceScene := preload("res://scenes/puzzle_piece.tscn")
 
 @export var puzzle: Puzzle
 @export var round_duration: float = 60.0
-@export var cell_size: Vector2 = Vector2(100, 100)
-@export var preview_origin: Vector2 = Vector2(80, 140)
-@export var solve_origin: Vector2 = Vector2(680, 140)
+@export var cell_size: Vector2 = Vector2(160, 160)
+@export var preview_origin: Vector2 = Vector2(16, 64)
+@export var preview_scale: float = 0.35
+@export var center_solve_grid: bool = true
+@export var solve_origin: Vector2 = Vector2(420, 200)
+@export var hud_margin_top: float = 60.0
 
 var _start_button: Button
 var _score_label: Label
@@ -15,7 +18,7 @@ var _timer: Timer
 var _time_left: float = 0.0
 var _running: bool = false
 var _pieces: Array[PuzzlePiece] = []
-var _preview_nodes: Array[ColorRect] = []
+var _preview_nodes: Array[Control] = []
 
 
 func _ready() -> void:
@@ -26,6 +29,11 @@ func _ready() -> void:
 	GameState.fuzz_level = 0.0
 	_set_time_remaining(round_duration)
 	_on_score_changed(GameState.score)
+	if puzzle == null:
+		puzzle = Puzzle.new()
+		puzzle.grid_columns = 3
+		puzzle.grid_rows = 2
+		push_warning("Main: puzzle was null; created a 3x2 placeholder.")
 	_build_preview()
 
 
@@ -72,15 +80,32 @@ func _build_preview() -> void:
 	for n in _preview_nodes:
 		n.queue_free()
 	_preview_nodes.clear()
+	var pcell := cell_size * preview_scale
 	for r in puzzle.grid_rows:
 		for c in puzzle.grid_columns:
 			var tile := ColorRect.new()
-			tile.size = cell_size - Vector2(4, 4)
-			tile.position = preview_origin + Vector2(c, r) * cell_size
-			tile.color = Color(0.8, 0.6, 0.4)
+			tile.size = pcell - Vector2(2, 2)
+			tile.position = preview_origin + Vector2(c, r) * pcell
+			tile.color = Color(0.5, 0.4, 0.3, 0.9)
 			tile.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			add_child(tile)
 			_preview_nodes.append(tile)
+	var label := Label.new()
+	label.text = "Preview"
+	label.position = preview_origin + Vector2(0, -22)
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(label)
+	_preview_nodes.append(label)
+
+
+func _compute_solve_origin() -> Vector2:
+	if not center_solve_grid:
+		return solve_origin
+	var vp := get_viewport_rect().size
+	var grid := Vector2(puzzle.grid_columns, puzzle.grid_rows) * cell_size
+	var x := (vp.x - grid.x) * 0.5
+	var y := hud_margin_top + (vp.y - hud_margin_top - grid.y) * 0.5
+	return Vector2(round(x), round(y))
 
 
 func _spawn_pieces() -> void:
@@ -90,19 +115,21 @@ func _spawn_pieces() -> void:
 		p.queue_free()
 	_pieces.clear()
 
+	var origin := _compute_solve_origin()
 	var targets: Array[Vector2] = []
 	for r in puzzle.grid_rows:
 		for c in puzzle.grid_columns:
-			targets.append(solve_origin + Vector2(c, r) * cell_size)
+			targets.append(origin + Vector2(c, r) * cell_size)
 
 	var starts := targets.duplicate()
 	starts.shuffle()
 
 	for i in targets.size():
 		var p: PuzzlePiece = PuzzlePieceScene.instantiate()
-		add_child(p)
+		p.piece_size = cell_size
 		p.target_position = targets[i]
-		p.global_position = starts[i]
+		p.position = starts[i]
+		add_child(p)
 		_pieces.append(p)
 
 

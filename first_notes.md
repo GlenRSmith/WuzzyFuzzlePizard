@@ -17,7 +17,7 @@ Tthat means that the player character raises a long-stemmed pipe to their lips, 
 Fuzzy might mean that the images on each piece are completely or partially obscured, that the details of the edges (innies and outies that connect the pieces) are obscured, or both.
 The player can surrender, then fuzzy mode clears and the pieces animated reassemble into the completed puzzle.
 
-When the game starts, the assembled puzzle, with visible cut lines, is in the left half of the play area. When the player presses START (to be replaced with a thematically suitable word later), the whole gaming chamber fills with smoke, and a wavy animation of the Gaming Wizard fades into superimposition over the board. I'll device a sound effect later. Once the puzzle is obscured, the pieces are shuffled. The wizard disappears in a *puff*, and the player is now free to move the pieces into the right side. There will be a setting that controls whether:
+When the game starts, the assembled puzzle, with visible cut lines, is in the left half of the play area. When the player presses START (to be replaced with a thematically suitable word later), the whole gaming chamber fills with smoke, and a wavy animation of the Gaming Wizard fades into superimposition over the board. I'll devise a sound effect later. Once the puzzle is obscured, the pieces are shuffled. The wizard disappears in a *puff*, and the player is now free to move the pieces into the right side. There will be a setting that controls whether:
 A - When a piece is dropped in the right place in the target grid, the unfuzzy piece is shown
 B - No pieces are revealed until they are all in the correct target location.
 
